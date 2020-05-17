@@ -1,0 +1,20 @@
+{
+  "name": "satelink",
+  "version": "1.0.0",
+  "description": "webservice para orondo e irsum. implementara websockets",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "raul esteban alzate aristizabal",
+  "license": "MIT",
+  "dependencies": {
+    "animate.css": "^4.1.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0"
+  }
+}

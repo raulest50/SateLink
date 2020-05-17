@@ -1,0 +1,26 @@
+$color_primario: #F2EB80;
+$color_secundario: #F28444;
+$color_terciario: #0D0D0D;
+$color_aux1: #D95A2B;
+$color_aux2: #F24E29;
+
+
+
+.cabecera{
+    border-bottom-color: $color_secundario;
+    border-bottom-width: .1em;
+    border-bottom-style: solid;
+    margin-bottom: 2em;
+}
+
+div.fondo1{
+    background-color: $color_aux2;
+}
+
+div.fondo2{
+    background-color: $color_aux1;
+}
+
+div.fondo3{
+    background-color: $color_primario;
+}

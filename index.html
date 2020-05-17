@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet">
+
+    <title>Satelink</title>
+
+
+    <!-- Vue development version-->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+
+    <!-- Vue development version-->
+    <script src="js/Vue.js"></script>
+
+    <!-- foundation, en reemplazo de bootstrap. fue buena idea porque el XY grid es mas avanzado-->
+    <link rel="stylesheet" href="Foundation6/assets/css/foundation.css">
+
+    <!-- para hacer animaciones como el del titulo satelink-->
+    <link rel="stylesheet" href="animatejs/animate.css">
+
+    <!-- mi estilizado personalizado -->
+    <link rel="stylesheet" href="css/style.css">
+
+  </head>
+  <body>
+
+    <div id="app" class="grid-container fluid">
+
+      <div class="grid-x grid-padding-x grid-padding-y">
+        <div class="large-12 cell cabecera">
+          <br>
+          <h1 class="animate__animated animate__bounce animate__slow">SateLink</h1>
+        </div>
+      </div>
+
+      <div class="grid-x grid-padding-x grid-margin-y">
+        <p>
+          Bienvenido, esta aplicacion web le ayudara a hacer pruebas de conexion en cada uno de los nodos
+        </p>
+      </div>
+
+      <div class="grid-x grid-padding-x grid-margin-y">
+        <nodo_pos></nodo_pos>
+      </div>
+
+
+    </div>
+
+    
+    <script src="js/main_app.js"></script>
+
+    <!--foundation framework-->
+    <script src="Foundation6/assets/js/vendor.js"></script>
+    <script src="Foundation6/assets/js/foundation.js"></script>
+  </body>
+</html>
