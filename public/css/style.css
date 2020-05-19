@@ -2,13 +2,12 @@
   border-bottom-color: #F28444;
   border-bottom-width: .1em;
   border-bottom-style: solid;
-  margin-bottom: 2em; }
+  margin-bottom: 3em; }
 
-div.fondo1 {
-  background-color: #F24E29; }
+.espaciar {
+  margin-top: 2em;
+  margin-bottom: 4em; }
 
-div.fondo2 {
-  background-color: #D95A2B; }
-
-div.fondo3 {
-  background-color: #F2EB80; }
+.nodo_tablet {
+  border: 0.05em solid #F24E29;
+  box-shadow: 0.2em 0.2em 0.2em #0D0D0D; }

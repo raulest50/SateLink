@@ -4,23 +4,20 @@ $color_terciario: #0D0D0D;
 $color_aux1: #D95A2B;
 $color_aux2: #F24E29;
 
-
-
 .cabecera{
     border-bottom-color: $color_secundario;
     border-bottom-width: .1em;
     border-bottom-style: solid;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
 }
 
-div.fondo1{
-    background-color: $color_aux2;
+.espaciar{
+    margin-top: 2em;
+    margin-bottom: 4em;
 }
 
-div.fondo2{
-    background-color: $color_aux1;
-}
-
-div.fondo3{
-    background-color: $color_primario;
+.nodo_tablet{
+    //background-color: $color_primario;
+    border: 0.05em solid $color_aux2;
+    box-shadow: 0.2em 0.2em 0.2em $color_terciario;
 }

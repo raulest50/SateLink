@@ -1,7 +1,12 @@
 Vue.component('nodo_pos', {
-    props: [],
+    props: ['ip', 'mac', 'nombre'],
     template: `
-    <i class="fas fa-tablet-alt"></i>
+    <div class="grid-y grid-margin-y nodo_tablet">
+        <i class="fas fa-tablet-alt fa-7x text-center large-6 cell"></i>
+        <h5 class="large-2 cell">nombre: {{ nombre }}</h5>
+        <h5 class="large-2 cell">ip: {{ ip }}</h5>
+        <h5 class="large-2 cell">mac: {{ mac }}</h5>
+    </div>
     `,
     methods: {
         Emit_Apagar(){
