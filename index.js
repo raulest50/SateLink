@@ -27,8 +27,10 @@ app.get('/', function (req, res) {
 // procesar get request
 app.get('/buscar_producto', function (req, res) {
   console.log(req.query.nombre);
-  mongoH.MultiInsertionTest([{nombre:'verde', valor:7}, {nombre:'magenta', valor:21}]);
-  res.send('funcionamiento correcto');
+  mongoH.buscar({nombre:`${req.query.nombre}`}, (docs)=>{
+    res.send(docs);
+    console.log('/buscar_producto finalizado');
+  });
 });
 
 // expone todo el contenido de la carpeta public
