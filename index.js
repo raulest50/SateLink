@@ -24,9 +24,19 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-// procesar get request
+// app.get para procesar gets y app.all para procesar post y get
 app.get('/buscar_producto', function (req, res) {
-  console.log(req.query.nombre);
+  console.log(req.query);
+  console.log(req.params);
+  mongoH.buscar({nombre:`${req.query.nombre}`}, (docs)=>{
+    res.send(docs);
+    console.log('/buscar_producto finalizado');
+  });
+});
+
+app.post('/buscar_producto', function (req, res) {
+  console.log('post request');
+  console.log(req.body);
   mongoH.buscar({nombre:`${req.query.nombre}`}, (docs)=>{
     res.send(docs);
     console.log('/buscar_producto finalizado');
