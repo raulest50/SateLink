@@ -1,0 +1,4 @@
+name: "html_request_snipped_satelink"
+dependencies:
+  http: ^0.12.1
+  udp: ^3.0.3

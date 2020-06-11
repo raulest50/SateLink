@@ -4,7 +4,12 @@ var app = express();
 var http = require('http').createServer(app);
 const port = process.env.PORT || 3000;
 
+// para el servidor UDP
+const NetcatServer = require('netcat/server');
 
+// para conocer la direccion ip local facilmente
+const internalIp = require('internal-ip');
+var LOCAL_IP = internalIp.v4.sync();
 
 
 // custom lib para hacer lecturas y escrituras a mongo.
@@ -50,3 +55,13 @@ app.use(express.static('public'));
 http.listen(port, () => {
   console.log('listening at port' + port + ' :)');
 });
+
+
+// UDP server. se usa para que otras aplicaciones hagan un broadcast y puedan descubrir 
+// de manera automatica el servidor.
+var nc = new NetcatServer()
+nc.udp().port(2100).listen().on('data', function (rinfo, data) {
+  console.log('Got', data.toString(), 'from', rinfo.address, rinfo.port);
+  nc.udp().port(65002).send('server ip:' + LOCAL_IP);
+  //nc.close()
+})
