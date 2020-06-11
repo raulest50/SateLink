@@ -14,7 +14,6 @@ var LOCAL_IP = internalIp.v4.sync();
 
 // custom lib para hacer lecturas y escrituras a mongo.
 var mongoH = require('./customlib/mongoHandling');
-
 // custom lib relacionada con el servidor web socket
 var wsH = require('./customlib/wsocketHandling');
 // se inicia el servidor web socket.
