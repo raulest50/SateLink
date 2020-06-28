@@ -8,7 +8,7 @@ void main() async{
   var sender = await UDP.bind(Endpoint.any(port: Port(65000)));
   
   // crea instancia udp en el puerto 65002 de este dispositivo para recivir mensajes.
-  var receiver = await UDP.bind(Endpoint.loopback(port: Port(65002)));
+  var receiver = await UDP.bind(Endpoint.loopback(port: Port(4001)));
   
   // receiving\listening
   receiver.listen((datagram) {
