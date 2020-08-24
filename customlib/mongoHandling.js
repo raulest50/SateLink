@@ -7,8 +7,10 @@ const assert = require('assert');
 // Connection URL
 const mongo_url = 'mongodb://localhost:27017';
 // Database Name
-const dbNombre = 'granero';
-const collectionName = 'productos';
+const dbNombre = 'Retail';
+
+exports.COLLECTION_PRODUCTOS = 'productos';
+//const collectionName = 'productos';
 
 
 
@@ -21,7 +23,7 @@ const insertDocuments = function (db, MiLista, callback) {
         assert.equal(err, null);
         assert.equal(MiLista.length, result.result.n);
         assert.equal(MiLista.length, result.ops.length);
-        console.log(`Inserted ${MiLista.length} documents into the collection`);
+        console.log('mongoHandling', 'insertDocuments', `Inserted ${MiLista.length} documents into the collection`);
         callback(result);
     });
 }
@@ -31,7 +33,7 @@ exports.multi_insert = function (MiLista) {
     // Use connect method to connect to the server
     mongo_client.connect(function (err) {
         assert.equal(null, err);
-        console.log("Connected successfully to server");
+        console.log('mongoHandling', 'multi_insert', "Connected successfully to server");
         const db = mongo_client.db(dbNombre);
         insertDocuments(db, MiLista, function () {
             mongo_client.close();
@@ -41,37 +43,34 @@ exports.multi_insert = function (MiLista) {
 
 
 
-// Lecturas >>>
-// se crea una funcion que recibe un objeto db, definido en mongodb, y una funcion llamada callback,
-// la cual es definida por mi. la idea es usar esta custom function callback para pasar el resultado de
-// la busqueda, docs.
-// cb es un objeto que define los criterios de busqueda, si es vacio mongo trae todos los documentos
-const findDocuments = function (db, cb, callback) {
-    // Get the documents collection
-    const collection = db.collection(collectionName);
-    // Find some documents
-    collection.find(cb).toArray(function (err, docs) {
-        assert.equal(err, null);
-        console.log("Se encontraron los siguientes documentos:");
-        console.log(docs);
-        callback(docs);
-    });
-}
 
-exports.buscar = function (cb, callback) {
+/**
+ * primero se crea un mongoclient al cual se le pasa una funcion como argumento la cual se ejecuta cunado
+ * se logra la conexion. al lograrse la conexion se crea un objeto tipo colleccion con el cual se hace la 
+ * busqueda mediante collection.find  . a esta funcion se le pasa una funcion que se ejecutara una vez
+ * se halla terminado collection.find, el resultado de la busqueda estara en docs.
+ * finalmente se ejecuta callback(docs) que es una funcion que se pada desde index.js y permite
+ * entregar el resultado del query al index.js dentro del paradigma de programacion asynchrona o non-blocking
+ * @param {*} q_obj query object
+ * @param {*} CNAME collection name
+ * @param {*} callback function to execute when query finished
+ */
+exports.buscar = function (q_obj, CNAME, callback) {
     const mongo_client = new MongoClient(mongo_url, { useNewUrlParser: true, useUnifiedTopology: true });
-    mongo_client.connect(function (err) {
-        assert.equal(null, err);
-        console.log("Conexion a mongo exitosa");
-        const db = mongo_client.db(dbNombre);
-
-        findDocuments(db, cb, function (docs) {
+    mongo_client.connect(function (err) { // cuando se conecta ejecuta >>>
+        if (err) { return onErr(err); } // proper error handling https://nodejs.org/en/knowledge/command-line/how-to-prompt-for-command-line-input/
+        const db = mongo_client.db(dbNombre); // base de datos
+        const collection = db.collection(CNAME); // coleccion
+        collection.find(q_obj).toArray(function (err, docs) { // cuando termina collection.find ejecuta >>>
+            if (err) { return onErr(err); }
             mongo_client.close();
-            callback(docs);// se usa la funcion callback que se pasa desde el index.js como herramienta para
-            //pasar el resultado
+            callback(docs);
         });
     });
 }
 
-
+function onErr(err) {
+    console.log(err);
+    return 1;
+}
 
