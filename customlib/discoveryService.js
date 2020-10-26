@@ -27,7 +27,7 @@ exports.StartUDPListening = function(){
         let msg = bmsg.toString('ascii');
         console.log('got', msg, 'from', ringfo.address);
         if(msg == 'satelink.ip'){ // server ip broadcasting requested
-            s.send(bcast_ans, UDP_PORT_OUT, '255.255.255.255', (err, bytes)=>{
+            s.send(bcast_ans, UDP_PORT_OUT, getLocalBroadcastIP(), (err, bytes)=>{
                 console.log(ringfo.address, ringfo.port, msg, bcast_ans_str);
             }); // local ip is broadcasted
         }
@@ -40,7 +40,7 @@ exports.StartUDPListening = function(){
     });
 }
 
-exports.getLocalBroadcastIP = function(){
+getLocalBroadcastIP = function(){
     let spl = LOCAL_IP.split('.');
     return spl[0] +'.'+ spl[1] +'.'+ spl[2] +'.'+ '255';
 }
