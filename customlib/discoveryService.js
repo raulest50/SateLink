@@ -41,6 +41,6 @@ exports.StartUDPListening = function(){
 }
 
 getLocalBroadcastIP = function(){
-    let spl = LOCAL_IP.split('.');
+    let spl = internalIp.v4.sync().split('.');
     return spl[0] +'.'+ spl[1] +'.'+ spl[2] +'.'+ '255';
 }

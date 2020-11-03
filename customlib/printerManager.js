@@ -79,7 +79,7 @@ function imprimir_draft(lista){
         c.partialcut;
 
     console.log(msg);
-    //TCP_Send(msg);
+    TCP_Send(msg);
 }
 
 function TCP_Send(msg){
