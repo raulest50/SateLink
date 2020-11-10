@@ -67,10 +67,12 @@ function imprimir_draft(lista){
     let msg = 
         c.printnv01 +
         c.setLeftAlign +
-        '\n Direccion: Av 2GN #73CN 02\n' +
+        '\n NIT: 43475437-1 \n'+
+        'Direccion: Av 2BN #73CN 02\n' +
         'Tel. 6542985 \n' +
         'CALI VALLE DEL CAUCA\n' +
-        `${format.asString(format.DATETIME_FORMAT, new Date())}\n`+
+        `FECHA:  ${format.asString(format.DATETIME_FORMAT, new Date())}\n`+
+        'print test\n'+
         c.setLeftAlign +
         blk_header +
         blk +

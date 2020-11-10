@@ -28,6 +28,10 @@ exports.SetUpHttpServer = function(){
         imprimir_remi(req, res);
     });
 
+    app.get('/registrar_venta', function(req, res){
+
+    });
+
     app.use(express.static('public')); // expone todo el contenido de la carpeta public
 
     http.listen(HTTP_PORT, () => { // se activa express server
@@ -35,6 +39,11 @@ exports.SetUpHttpServer = function(){
         const internalIp = require('internal-ip'); // para conocer la direccion ip local facilmente
         console.log(internalIp.v4.sync());
     });
+}
+
+
+function RegistrarVenta(){
+    
 }
 
 
