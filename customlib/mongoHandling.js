@@ -42,7 +42,9 @@ exports.multi_insert = function (MiLista) {
 }
 
 
-exports.insert_venta_transaction = function(venta){}
+exports.insert_venta_transaction = function(venta){
+    
+}
 
 
 

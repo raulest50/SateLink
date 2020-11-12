@@ -2,6 +2,7 @@
 
 // para el web server local con express 
 var express = require('express');
+const bodyParser = require('body-parser');// se requiere para http POST
 var app = express();
 var http = require('http').createServer(app);
 const HTTP_PORT = process.env.PORT || 3000;
@@ -12,6 +13,11 @@ var mongoH = require('./customlib/mongoHandling');
 var bix = require('./customlib/printerManager');
 
 exports.SetUpHttpServer = function(){
+
+    app.use(express.static('public')); // expone todo el contenido de la carpeta public
+    // el orden importa, debe ejecutarse antes de definir las rutas.
+    app.use(bodyParser.urlencoded({ extended: true })); // con esto req.body ya no es null
+    
 
     app.get('/', function (req, res) { // se configura el index
         res.sendFile(__dirname + '/index.html');
@@ -24,15 +30,15 @@ exports.SetUpHttpServer = function(){
     });
   
   
-    app.get('/imprimir_remi', function(req, res){
+    app.post('/imprimir_remi', function(req, res){
+        console.log('imprimir_remi')
         imprimir_remi(req, res);
+        res.send("done");
     });
 
     app.get('/registrar_venta', function(req, res){
-
-    });
-
-    app.use(express.static('public')); // expone todo el contenido de la carpeta public
+        RegistrarVenta(req, res);
+    });    
 
     http.listen(HTTP_PORT, () => { // se activa express server
         console.log('Http at port ' + HTTP_PORT + ' :)');
@@ -42,15 +48,15 @@ exports.SetUpHttpServer = function(){
 }
 
 
-function RegistrarVenta(){
-    
+function RegistrarVenta(req, res){
+    mongoH.insert_venta_transaction(req.query.venta)
 }
 
 
 function imprimir_remi(req, res){
     try{
-        let lista_venta = req.query.lista_compra;
-        //console.log(lista_venta);
+        let lista_venta = req.body.lista_compra;
+        console.log(req.body)
         bix.imprimir_draft(lista_venta);
     } catch(error){
         console.log(error.message);

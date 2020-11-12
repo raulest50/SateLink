@@ -81,7 +81,10 @@ function imprimir_draft(lista){
         c.partialcut;
 
     console.log(msg);
+    console.log(msg.length);
+    console.log(Buffer.byteLength(msg, 'utf-8'));
     TCP_Send(msg);
+    
 }
 
 function TCP_Send(msg){

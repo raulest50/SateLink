@@ -17,8 +17,8 @@ ServicioHttp.SetUpHttpServer(); // se configuran las rutas
 
 // ###############  UDP SERVER   ################## apagado para pruebas y no interfererir con production
 // UDP Liestening for automatic ip server discovery
-var discoverUDP = require('./customlib/discoveryService');
-discoverUDP.StartUDPListening();
+//var discoverUDP = require('./customlib/discoveryService');
+//discoverUDP.StartUDPListening();
 
 
 // https://www.varonis.com/blog/netcat-commands/ -> solo si se instala netcat para usar en el cmd o terminal
