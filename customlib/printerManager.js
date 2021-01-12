@@ -10,6 +10,8 @@ exports.findBixolon = findBixolon;
 exports.lista2txt = lista2txt;
 exports.imprimir_draft = imprimir_draft;
 
+var printer_ip=''; // direccion ip de la impresora
+
 /**
  * El servicio de deteccion automatica se realizo gracias a la ing. inversa con wireshark de las 
  * comunicaicones y la ing inversa al codigo fuente de la app de android bixolon utility.
@@ -32,6 +34,7 @@ function findBixolon() {
             if (rinfo.port == 48781) {
                 console.log(rinfo.address); // printer current ip address
                 console.log('rev:   ' + msg.toString());
+                printer_ip = rinfo.address;
                 s.close(); // if answer is received socket is closed
             }
         });
@@ -41,6 +44,7 @@ function findBixolon() {
     });
 }
 
+findBixolon(); // se hace un udp broadcast para encontrar la direcion ip de la impresora.
 
 function lista2txt(li){
     //console.log(li);
@@ -84,12 +88,11 @@ function imprimir_draft(lista){
     console.log(msg.length);
     console.log(Buffer.byteLength(msg, 'utf-8'));
     TCP_Send(msg);
-    
 }
 
 function TCP_Send(msg){
     var net = require('net');
-    var bix_ip = '192.168.77.103';
+    var bix_ip = printer_ip;
     var conn = net.createConnection(c.PORT, bix_ip);
     conn.once('connect', ()=>{
         console.log('connected to bixolon printer');

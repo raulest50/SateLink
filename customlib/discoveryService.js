@@ -16,6 +16,7 @@ var LOCAL_IP = internalIp.v4.sync();
 const bcast_ans_str = 'satelink.ip.ans:' + LOCAL_IP + ':';
 const bcast_ans = Buffer.from(bcast_ans_str);
 
+//console.log(`Ip local:  ${LOCAL_IP}`);
 
 
 /**
