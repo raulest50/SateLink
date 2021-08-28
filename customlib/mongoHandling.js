@@ -9,8 +9,10 @@ const mongo_url = 'mongodb://localhost:27017';
 // Database Name
 const dbNombre = 'Retail';
 
-exports.COLLECTION_PRODUCTOS = 'productos';
-//const collectionName = 'productos';
+const colecciones = {productos:'productos', rangosF:'rangofacturacion', ventas:'ventas'};
+
+exports.colecciones = colecciones;
+
 
 
 
@@ -42,8 +44,62 @@ exports.multi_insert = function (MiLista) {
 }
 
 
-exports.insert_venta_transaction = function(venta){
+exports.insert_venta_transaction = function(venta_str, res){
+    let venta = JSON.parse(venta_str);
     
+    let nfecha = new Date(Date.now());
+    venta.fecha_str = nfecha.toString();
+    venta.fecha = nfecha;
+    venta.id = venta._id;
+
+    let valor = 0;
+    venta.items.forEach( (item_venta)=> {
+        valor += item_venta.subTotal;
+    });
+
+    venta.valor = valor;
+
+    const mongo_client = new MongoClient(mongo_url, { useNewUrlParser: true, useUnifiedTopology: true });
+    mongo_client.connect( async function (err) {
+        if (err) { return onErr(err); }
+        
+        // Step 1: Start a Client Session
+        const session = mongo_client.startSession();
+
+        // Step 2: Optional. Define options to use for the transaction
+        const transactionOptions = {
+            readPreference: 'primary',
+            readConcern: { level: 'local' },
+            writeConcern: { w: 'majority' }
+        };
+
+        // Step 3: Use withTransaction to start a transaction, execute the callback, and commit (or abort on error)
+        // Note: The callback for withTransaction MUST be async and/or return a Promise.
+        try {
+            await session.withTransaction(async () => {
+                const db = mongo_client.db(dbNombre);
+                const collrf = db.collection(colecciones.rangosF);
+                const collventas = db.collection(colecciones.ventas);
+                
+                // Important:: You must pass the session to the operations
+                
+                let sec = await collrf.findOne({_id:'consecutivo'});
+                console.log( (Number(sec.valor)+1).toString() );
+                venta._id = (Number(sec.valor)+1).toString();
+                console.log(venta);
+
+                await collventas.insertOne(venta, { session });
+                await collrf.updateOne({_id:'consecutivo'}, { $set: {valor: venta._id} }, {session});
+
+                }, transactionOptions);
+            } catch(error){
+                res.send("error");
+            } finally {
+                await session.endSession();
+                await mongo_client.close();
+                res.send("202"); // http code "ACCEPTED"
+        }
+    });
 }
 
 

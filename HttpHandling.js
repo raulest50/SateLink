@@ -36,8 +36,9 @@ exports.SetUpHttpServer = function(){
         res.send("done");
     });
 
-    app.get('/registrar_venta', function(req, res){
+    app.post('/registrar_venta', function(req, res){
         RegistrarVenta(req, res);
+        //res.send("done _ still not fully implemented");
     });    
 
     http.listen(HTTP_PORT, () => { // se activa express server
@@ -49,14 +50,14 @@ exports.SetUpHttpServer = function(){
 
 
 function RegistrarVenta(req, res){
-    mongoH.insert_venta_transaction(req.query.venta)
+    mongoH.insert_venta_transaction(req.body.venta, res);
 }
 
 
 function imprimir_remi(req, res){
     try{
         let lista_venta = req.body.lista_compra;
-        console.log(req.body)
+        console.log(req.body);
         bix.imprimir_draft(lista_venta);
     } catch(error){
         console.log(error.message);
@@ -90,9 +91,9 @@ function buscar_producto(tp, b, res){
             q_obj = {_id: RegExp(`${b}$`)};
             break;
         }
-        mongoH.buscar(q_obj, mongoH.COLLECTION_PRODUCTOS, (docs)=>{
+        mongoH.buscar(q_obj, mongoH.colecciones.productos, (docs)=>{
             res.send(docs);
-            //console.log('/buscar_producto finalizado :)');
+            console.log('/buscar_producto finalizado :)');
         });
     } catch(error){
         console.log(error.message)
